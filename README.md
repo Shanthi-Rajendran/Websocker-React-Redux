@@ -98,7 +98,14 @@ npm install --save-dev webpack webpack-dev-server webpack-cli
 Now node_modules folder to manage 3rd party dependency will be created.
 
 ### 6.Modify the start script in package.json 
-
+package.json
+```
+"scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+```
 Now execute npm start we get our output in localhost:8080 (generally but if the port is already taken by any other process it varies)
+
 
 You can find Hello world being displayed in browser and console as well.

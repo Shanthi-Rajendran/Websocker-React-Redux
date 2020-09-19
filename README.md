@@ -1,77 +1,104 @@
 # React with webpack and babel 
-> Goal 1 - This branch shows how to set-up a basic Javascript application from scratch.
+> Goal 2 - This branch shows how to set-up webpack to the javascript application
 
 ## Steps
-  - Creating a new project directory (Linux)
-  - Initialize the project as npm
-  - Creating your first hello world using js and execute as npm
+  - Creating the entry point(public) folder
+  - Create a index.html using the following command in the public directory
+  - Link JavaScript to your HTML file using script tag
+  - Generating the bundle.js file
+  - Install webpack dev server and CLI from  root of the project
+  - Modify the start script in package.json
 
 
-### 1. Creating a new project directory (Linux)
-Create a new project folder and navigate into the folder
-1.  Open a new terminal.
-2.  Use the following command to create a new project
-Eg. mkdir <project_name>
+### 1. Creating the entry point(public) folder
+
+All the javascript source code will be bundled as a single source and be ready for production in this public folder.
+
+From root folder,
+
 ```sh
-$ mkdir Websocket-REACT-SPRINGBOOT
+$ mkdir public
+$ cd public
 ```
-3.  Navigate into the project using
+### 2. Create a index.html using the following command in the public directory
 ```sh
-$ cd Websocket-REACT-SPRINGBOOT
+$ touch index.html
 ```
-Now the project folder is created successfully.
+Place the below script that has code to print “Hello world” in the browser
 
-### 2. Initialize the project as npm
+index.html
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Chat Application</title>
+</head>
+<body>
+   <h1>Hello world</h1>
+</body>
+</html>
+```
+
+### 3. Link JavaScript to your HTML file using script tag
+
+index.html
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Chat Application</title>
+</head>
+<body>
+   <h1>Hello world</h1>
+   <script src="./bundle.js"></script>
+</body>
+</html>
+
+```
+
+### 4. Generating the bundle.js file
+
+Create a webpack.config.js from root using the following command
+
+
 ```sh
-$  npm init -y
-```
-  y flag to indicate creation of package.json with default configuration.
-           
-  Now your folder structure has package.json file.\
-	It is mainly for 2 reasons,\
-    - You can add any other node packages from npm (like npm i antd)\
-    - For adding scripts for lifecycle methods like start,test,deploy,pre-deploy etc for your production phases 
-
-### 3. Creating your first hello world using js and execute as npm
-  1.  Create a new folder src and navigate into the folder
-```sh
-$  mkdir src
-$  cd src
-```
-  2.  Create a new file index.js
-```sh
-$  touch index.js
-```
-- touch <filename> is a linux command to create a new empty file.
-
-Write a console statement console.log(‘hello world’) and save it.
-
-   3. To execute as npm we should make modification in package.json in the lifecycle script.
- 
- Open your package.json and add start script so your files looks like,
- ```sh
-{
-  ...
-  "scripts": {
-    "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  ...
-}
-```
-   4.  Now from your root folder use the following command to start the application. 
-```sh
-$  npm start
+$ touch webpack.config.js
 ```
 
-### Terminal Output : 
+And place the below code
 
-> Websocket-REACT-SPRINGBOOT@1.0.0 start XXXX/Websocket-REACT-SPRINGBOOT\
-> node src/index.js\
-> Hello world
+```
+module.exports = {
+   // Bundles all the js files imported in index.js
+   entry: './src/index.js',
+   // Bundles all the js files as bundle.js
+   output: {
+     path: __dirname + '/public',
+     publicPath: '/',
+     filename: 'bundle.js'
+   },
+   // Serve our application to browser
+   devServer: {
+     contentBase: './public'
+   }
+ };
 
+```
 
+### 5.Install webpack dev server and CLI from  root of the project
 
+```
+npm install --save-dev webpack webpack-dev-server webpack-cli 
+```
 
+Now node_modules folder to manage 3rd party dependency will be created.
 
+### 6.Modify the start script in package.json 
 
+Now execute npm start we get our output in localhost:8080 (generally but if the port is already taken by any other process it varies)
+
+You can find Hello world being displayed in browser and console as well.
